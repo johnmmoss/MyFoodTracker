@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Api", "MyFoodTracker.Api\MyFoodTracker.Api.csproj", "{7D74B143-7883-4F30-8631-628B80F1DA4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Core", "MyFoodTracker.Core\MyFoodTracker.Core.csproj", "{2D4526BD-0718-421D-A789-1020408DECDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7D74B143-7883-4F30-8631-628B80F1DA4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D74B143-7883-4F30-8631-628B80F1DA4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D74B143-7883-4F30-8631-628B80F1DA4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4526BD-0718-421D-A789-1020408DECDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4526BD-0718-421D-A789-1020408DECDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4526BD-0718-421D-A789-1020408DECDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4526BD-0718-421D-A789-1020408DECDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
