@@ -1,18 +1,24 @@
 using System.Reflection;
 using FluentValidation;
-using MyFoodTracker.Api;
-using MyFoodTracker.Api.Settings;
+using MyFoodTracker.Data.AzureBlobStorage;
+using MyFoodTracker.Data.FileSystem;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Custom Setup:
-builder.Services.AddTransient<IFoodRepository, FoodRepository>();
-builder.Services.AddTransient<IFileSystem, FileSystem>();
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") 
+{
+   builder.Services.Configure<MyFoodTrackerSettings>(builder.Configuration.GetSection(MyFoodTrackerSettings.Name));
+   builder.Services.AddJsonFoodRepository(builder.Configuration);
+}
+else // Production
+{
+   builder.Services.AddAzureBlobFoodRepository();
+}
+
 builder.Services.AddValidatorsFromAssembly(Assembly.GetCallingAssembly());
-builder.Services.Configure<MyFoodTrackerSettings>(builder.Configuration.GetSection(MyFoodTrackerSettings.Name));
 
 var app = builder.Build();
 

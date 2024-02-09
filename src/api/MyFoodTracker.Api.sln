@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Api", "MyFood
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Core", "MyFoodTracker.Core\MyFoodTracker.Core.csproj", "{2D4526BD-0718-421D-A789-1020408DECDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Data.AzureBlobStorage", "MyFoodTracker.Data.AzureBlobStorage\MyFoodTracker.Data.AzureBlobStorage.csproj", "{67728FDC-748E-4DD2-BDBE-6B470728D339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFoodTracker.Data.FileSystem", "MyFoodTracker.Data.FileSystem\MyFoodTracker.Data.FileSystem.csproj", "{A3EE0278-9F6C-4DC6-8B69-5CE39EF6EB7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{2D4526BD-0718-421D-A789-1020408DECDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D4526BD-0718-421D-A789-1020408DECDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D4526BD-0718-421D-A789-1020408DECDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67728FDC-748E-4DD2-BDBE-6B470728D339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67728FDC-748E-4DD2-BDBE-6B470728D339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67728FDC-748E-4DD2-BDBE-6B470728D339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67728FDC-748E-4DD2-BDBE-6B470728D339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3EE0278-9F6C-4DC6-8B69-5CE39EF6EB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3EE0278-9F6C-4DC6-8B69-5CE39EF6EB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3EE0278-9F6C-4DC6-8B69-5CE39EF6EB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3EE0278-9F6C-4DC6-8B69-5CE39EF6EB7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

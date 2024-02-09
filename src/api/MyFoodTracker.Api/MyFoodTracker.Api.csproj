@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b8781c54-62a3-42ab-8d58-7678be299c49</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyFoodTracker.Core\MyFoodTracker.Core.csproj" />
+    <ProjectReference Include="..\MyFoodTracker.Data.AzureBlobStorage\MyFoodTracker.Data.AzureBlobStorage.csproj" />
+    <ProjectReference Include="..\MyFoodTracker.Data.FileSystem\MyFoodTracker.Data.FileSystem.csproj" />
   </ItemGroup>
 
 

@@ -1,4 +1,4 @@
-namespace MyFoodTracker.Api.Settings;
+namespace MyFoodTracker.Data.FileSystem;
 
 public class MyFoodTrackerSettings
 {

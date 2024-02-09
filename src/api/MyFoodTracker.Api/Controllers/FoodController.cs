@@ -34,14 +34,19 @@ public class FoodController : Controller
                 Property = x.PropertyName, Error = x.ErrorMessage, 
             }));
         }
-        var newFoodItem = new FoodItem();
-        newFoodItem.Name = request.Name;
-        newFoodItem.NutritionalInfo.Carbohydrate = decimal.Parse(request.Carbohydrate);
-        newFoodItem.NutritionalInfo.Fibre = decimal.Parse(request.Fibre);
-        newFoodItem.NutritionalInfo.Fat = decimal.Parse(request.Fat);
-        newFoodItem.NutritionalInfo.Protein = decimal.Parse(request.Protein);
-        newFoodItem.NutritionalInfo.Calories = int.Parse(request.Calories);
-        
+        var newFoodItem = new FoodItem
+        {
+            Name = request.Name,
+            NutritionalInfo =
+            {
+                Carbohydrate = decimal.Parse(request.Carbohydrate),
+                Fibre = decimal.Parse(request.Fibre),
+                Fat = decimal.Parse(request.Fat),
+                Protein = decimal.Parse(request.Protein),
+                Calories = int.Parse(request.Calories)
+            }
+        };
+
         _foodRepository.Add(newFoodItem);
 
         return Ok();
