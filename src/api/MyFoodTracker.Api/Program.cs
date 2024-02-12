@@ -8,16 +8,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") 
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production") 
+{
+   builder.Services.AddAzureBlobFoodRepository();
+}
+else // Default use local files 
 {
    builder.Services.Configure<MyFoodTrackerSettings>(builder.Configuration.GetSection(MyFoodTrackerSettings.Name));
    builder.Services.AddJsonFoodRepository(builder.Configuration);
 }
-else // Production
-{
-   builder.Services.AddAzureBlobFoodRepository();
-}
 
+const string CorsPolicyDefault = "default";
+builder.Services.AddCors(options =>
+{
+   options.AddPolicy(name: CorsPolicyDefault,
+      policy  =>
+      {
+         policy.WithOrigins("http://localhost:3000");
+      });
+});
 builder.Services.AddValidatorsFromAssembly(Assembly.GetCallingAssembly());
 
 var app = builder.Build();
@@ -30,7 +39,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
-
+app.UseCors(CorsPolicyDefault);
 app.UseAuthorization();
 
 app.MapControllers();
