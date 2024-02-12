@@ -10,6 +10,8 @@
       <PackageReference Include="Azure.Identity" Version="1.10.4" />
       <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0-beta.1" />
       <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,9 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-        <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.23\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      </Reference>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions"></Reference>
     </ItemGroup>
 
 </Project>
