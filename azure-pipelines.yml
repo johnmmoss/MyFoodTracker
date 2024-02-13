@@ -35,7 +35,7 @@ stages:
           inputs:
             command: 'custom'
             workingDir: "src/client"
-            customCommand: 'npm run build'
+            customCommand: 'run build'
         - task: PublishBuildArtifacts@1
           displayName: "Publish Artifact (api)"
           inputs:
