@@ -32,6 +32,12 @@ stages:
             archiveFile: "$(Build.ArtifactStagingDirectory)/out/myfoodtracker-api-$(Build.BuildId).zip"
             replaceExistingArchive: true
         - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: "src/client"
+        - task: Npm@1
+          displayName: 'npm build'
           inputs:
             command: 'custom'
             workingDir: "src/client"
