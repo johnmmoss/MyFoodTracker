@@ -29,7 +29,7 @@ stages:
             rootFolderOrFile: "$(Build.ArtifactStagingDirectory)/api"
             includeRootFolder: false
             archiveType: "zip"
-            archiveFile: "$(Build.ArtifactStagingDirectory)/out/appts-alpha-api-$(Build.BuildId).zip"
+            archiveFile: "$(Build.ArtifactStagingDirectory)/out/myfoodtracker-api-$(Build.BuildId).zip"
             replaceExistingArchive: true
         - task: PublishBuildArtifacts@1
           displayName: "Publish Artifact"
