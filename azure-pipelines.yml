@@ -32,9 +32,10 @@ stages:
             archiveFile: "$(Build.ArtifactStagingDirectory)/out/myfoodtracker-api-$(Build.BuildId).zip"
             replaceExistingArchive: true
         - task: Npm@1
-            inputs:
-              command: 'npm run build'
-              workingDir: "src/client"
+          inputs:
+            command: 'custom'
+            workingDir: "src/client"
+            customCommand: 'npm run build'
         - task: PublishBuildArtifacts@1
           displayName: "Publish Artifact (api)"
           inputs:
