@@ -110,7 +110,7 @@ stages:
       - deployment: ApplyTerraform
         dependsOn: ApproveTerraformPlan
         displayName: "Apply Terraform"
-        environment: nbs-appts-dev
+        environment: my-food-tracker-dev
         strategy:
           runOnce:
             deploy:
