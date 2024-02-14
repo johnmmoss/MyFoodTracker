@@ -9,7 +9,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   azure_subscription_id: '11c3f65f-a3ca-4d31-8716-8d5229a01942'
-  azure_devops_subscription_name: 'myfoodtracker-rg-dev-uks'
+  azure_devops_subscription_name: 'myfoodtracker-azure-devops'
 
 stages:
   - stage: Build
