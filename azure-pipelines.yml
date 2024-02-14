@@ -84,6 +84,7 @@ stages:
               addSpnToEnvironment: true
               azureSubscription: $(azure_devops_subscription_name)
               inlineScript: |
+                az account list -o table
                 choco install terraform -y
                 $env:ARM_CLIENT_ID=$env:servicePrincipalId
                 $env:ARM_CLIENT_SECRET=$env:servicePrincipalKey
