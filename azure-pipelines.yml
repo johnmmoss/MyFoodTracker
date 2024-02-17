@@ -74,7 +74,7 @@ stages:
     jobs:
 
       - job: InfraPlan 
-        displayName: RunInfraPlan
+        displayName: Infra Plan
         steps:
           - checkout: none
             displayName: 'Download Infra Artifacts'
@@ -106,7 +106,7 @@ stages:
                 terraform plan -no-color
 
       - job: ApproveInfraPlan
-        dependsOn: RunInfraPlan
+        dependsOn: InfraPlan
         displayName: Approve Infra Plan
         pool: server
         steps:
