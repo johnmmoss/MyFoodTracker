@@ -40,34 +40,34 @@ stages:
             ArtifactName: "drop_api"
             publishLocation: "Container"            
 
-    - job: "BuildWeb"
-      steps:
-      - task: Npm@1
-        displayName: 'npm install'
-        inputs:
-          command: 'install'
-          workingDir: "src/client"
-      - task: Npm@1
-        displayName: 'npm build'
-        inputs:
-          command: 'custom'
-          workingDir: "src/client"
-          customCommand: 'run build'
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact (web)"
-        inputs:
-          PathtoPublish: "src/client/build"
-          ArtifactName: "drop_web"
-          publishLocation: "Container"  
+      - job: "BuildWeb"
+        steps:
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: "src/client"
+        - task: Npm@1
+          displayName: 'npm build'
+          inputs:
+            command: 'custom'
+            workingDir: "src/client"
+            customCommand: 'run build'
+        - task: PublishBuildArtifacts@1
+          displayName: "Publish Artifact (web)"
+          inputs:
+            PathtoPublish: "src/client/build"
+            ArtifactName: "drop_web"
+            publishLocation: "Container"  
 
-    - job: "BuildInfra"
-      steps:
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact (infra)"
-        inputs:
-          PathtoPublish: "deploy"
-          ArtifactName: "drop_infra"
-          publishLocation: "Container"   
+      - job: "BuildInfra"
+        steps:
+        - task: PublishBuildArtifacts@1
+          displayName: "Publish Artifact (infra)"
+          inputs:
+            PathtoPublish: "deploy"
+            ArtifactName: "drop_infra"
+            publishLocation: "Container"   
 
   - stage: DeployDev
     displayName: Deploy Dev
