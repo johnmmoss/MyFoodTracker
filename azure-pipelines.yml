@@ -145,7 +145,7 @@ stages:
                     azureSubscription: 'myfoodtracker-azure-devops'
                     appType: 'apiApp'
                     WebAppName: 'myfoodtracker-api-dev-uks'
-                    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip' 
+                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip' 
                - task: AzureCLI@2
                  displayName: DeployWeb
                  inputs:
