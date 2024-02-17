@@ -153,5 +153,6 @@ stages:
                    scriptLocation: inlineScript
                    addSpnToEnvironment: true
                    azureSubscription: $(azure_devops_subscription_name)
+                   workingDir: '$(Pipeline.WorkSpace)'
                    inlineScript: |
                      az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s drop_web --overwrite
