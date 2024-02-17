@@ -73,7 +73,7 @@ stages:
     displayName: Deploy Dev
     jobs:
 
-      - job: Infra Plan 
+      - job: InfraPlan 
         displayName: RunInfraPlan
         steps:
           - checkout: none
