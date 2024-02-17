@@ -153,7 +153,7 @@ stages:
                    scriptLocation: inlineScript
                    addSpnToEnvironment: true
                    azureSubscription: $(azure_devops_subscription_name)
-                   workingDir: '$(Pipeline.WorkSpace)'
+                   workingDirectory: '$(Pipeline.WorkSpace)'
                    inlineScript: |
                      write-host "Current dir:"
                      pwd
