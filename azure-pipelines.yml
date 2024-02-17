@@ -117,7 +117,7 @@ stages:
 
       - deployment: Deploy
         environment: my-food-tracker-dev
-        dependsOn: ReviewPlan
+   #     dependsOn: ReviewPlan
         strategy:
           runOnce:
             deploy:
@@ -146,12 +146,12 @@ stages:
                     appType: 'apiApp'
                     WebAppName: 'myfoodtracker-api-dev-uks'
                     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip' 
-                - task: AzureCLI@2
-                  displayName: DeployWeb
-                  inputs:
-                    scriptType: ps
-                    scriptLocation: inlineScript
-                    addSpnToEnvironment: true
-                    azureSubscription: $(azure_devops_subscription_name)
-                    inlineScript: |
-                      az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s build --overwrite
+               - task: AzureCLI@2
+                 displayName: DeployWeb
+                 inputs:
+                   scriptType: ps
+                   scriptLocation: inlineScript
+                   addSpnToEnvironment: true
+                   azureSubscription: $(azure_devops_subscription_name)
+                   inlineScript: |
+                     az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s build --overwrite
