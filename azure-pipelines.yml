@@ -120,7 +120,6 @@ stages:
         dependsOn: ApproveInfraPlan
         displayName: "Create Infra"
         environment: my-food-tracker-dev
-        checkout: none
         strategy:
           runOnce:
             deploy:
