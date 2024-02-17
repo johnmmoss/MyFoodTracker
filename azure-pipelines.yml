@@ -155,4 +155,8 @@ stages:
                    azureSubscription: $(azure_devops_subscription_name)
                    workingDir: '$(Pipeline.WorkSpace)'
                    inlineScript: |
+                     write-host "Current dir:"
+                     pwd
+                     "Directory contents:"
+                     ls
                      az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s drop_web --overwrite
