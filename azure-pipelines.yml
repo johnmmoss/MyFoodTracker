@@ -154,4 +154,4 @@ stages:
                    addSpnToEnvironment: true
                    azureSubscription: $(azure_devops_subscription_name)
                    inlineScript: |
-                     az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s build --overwrite
+                     az storage blob upload-batch -d "`$web" --account-name $(webStorageName) -s drop_web --overwrite
