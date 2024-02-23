@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MyFoodTracker.Api;
 
@@ -6,22 +7,26 @@ namespace MyFoodTracker.Data.FileSystem;
 
 public class JsonFoodRepository : IFoodRepository
 {
+    private readonly ILogger<JsonFoodRepository> _logger;
     private readonly IFileSystem _fileSystem;
     private MyFoodTrackerSettings _settings;
 
-    public JsonFoodRepository(IOptions<MyFoodTrackerSettings> settings, IFileSystem fileSystem)
+    public JsonFoodRepository(ILogger<JsonFoodRepository> logger, IOptions<MyFoodTrackerSettings> settings, IFileSystem fileSystem)
     {
+        _logger = logger;
         _fileSystem = fileSystem;
         _settings = settings.Value;
     }
 
     public IList<FoodItem> GetAll()
     {
+        _logger.LogInformation("Getting food items");
         return GetCurrentItems();
     }
 
     public async Task Add(FoodItem item)
     {
+        _logger.LogInformation($"Adding new food item {item.Name}");
         var currentItems = GetCurrentItems();
         currentItems.Add(item);
         var newContent = JsonSerializer.Serialize(currentItems);

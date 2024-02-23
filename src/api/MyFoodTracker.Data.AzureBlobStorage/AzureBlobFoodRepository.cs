@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Azure.Storage.Blobs;
+using Microsoft.Extensions.Logging;
 using MyFoodTracker.Api;
 
 namespace MyFoodTracker.Data.AzureBlobStorage;
@@ -8,20 +9,24 @@ public class AzureBlobFoodRepository : IFoodRepository
 {
     private const string ContainerName = "food";
     private const string FileName = "my-food-tracker.json";
-    
+
+    private readonly ILogger<AzureBlobFoodRepository> _logger;
     private readonly BlobServiceClient _blobServiceClient;
 
-    public AzureBlobFoodRepository(BlobServiceClient blobServiceClient)
+    public AzureBlobFoodRepository(ILogger<AzureBlobFoodRepository> logger, BlobServiceClient blobServiceClient)
     {
+        _logger = logger;
         _blobServiceClient = blobServiceClient;
     }
     public IList<FoodItem> GetAll()
     {
+        _logger.LogInformation("Getting food items");
         return GetCurrentItems();      
     }
 
     public async Task Add(FoodItem item)
     {
+        _logger.LogInformation($"Adding new food item {item.Name}");
         var currentItems = GetCurrentItems();
         currentItems.Add(item);
         var newContent = JsonSerializer.Serialize(currentItems);
