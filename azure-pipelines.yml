@@ -44,21 +44,21 @@ stages:
 
       - job: "BuildWeb"
         steps:
-         - task: PowerShell@2
-            name: BuildWeb
-            displayName: Build Web
-            inputs:
-              targetType: 'inline'
-              workingDirectory: '$(Pipeline.Workspace)'
-              script: |
-                write-host "Current directory:"
-                pwd
-                write-host "Directory contents:"
-                ls
-                cd src/client
-                write-host "Building web with endpoint: $(apiEndpointUrl)"
-                npm install
-                ($env:REACT_APP_API_URL = "$(apiEndpointUrl)") -and (npm run build)
+        - task: PowerShell@2
+          name: BuildWeb
+          displayName: Build Web
+          inputs:
+            targetType: 'inline'
+            workingDirectory: '$(Pipeline.Workspace)'
+            script: |
+              write-host "Current directory:"
+              pwd
+              write-host "Directory contents:"
+              ls
+              cd src/client
+              write-host "Building web with endpoint: $(apiEndpointUrl)"
+              npm install
+              ($env:REACT_APP_API_URL = "$(apiEndpointUrl)") -and (npm run build)
         - task: PublishBuildArtifacts@1
           displayName: "Publish Artifact (web)"
           inputs:
