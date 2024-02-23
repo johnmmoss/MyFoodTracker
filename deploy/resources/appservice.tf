@@ -21,9 +21,9 @@ resource "azurerm_windows_web_app" "api" {
     always_on = false
   }
 
-  #   app_settings = {
-  #     WEBSITE_RUN_FROM_PACKAGE              = 1
-  #   }
+    app_settings = {
+      ASPNETCORE_ENVIRONMENT = "Production"
+    }
 
   identity {
     type = "SystemAssigned"
