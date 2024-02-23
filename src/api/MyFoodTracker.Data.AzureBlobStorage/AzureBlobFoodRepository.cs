@@ -1,13 +1,14 @@
-﻿using System.Text.Json;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using MyFoodTracker.Api;
+using Exception = System.Exception;
 
 namespace MyFoodTracker.Data.AzureBlobStorage;
 
 public class AzureBlobFoodRepository : IFoodRepository
 {
-    private const string ContainerName = "food";
+    private const string ContainerName = "main";
     private const string FileName = "my-food-tracker.json";
 
     private readonly ILogger<AzureBlobFoodRepository> _logger;
@@ -43,11 +44,22 @@ public class AzureBlobFoodRepository : IFoodRepository
 
     private List<FoodItem> GetCurrentItems()
     {
-        var blobClient = GetBlobClient(ContainerName, FileName);
-
-        var data = blobClient.DownloadContent().Value.Content;
-
-        return data != null ? JsonSerializer.Deserialize<List<FoodItem>>(data) : new List<FoodItem>();
+        try
+        {
+            var blobClient = GetBlobClient(ContainerName, FileName);
+            if (!blobClient.Exists())
+            {
+                blobClient.Upload(BinaryData.FromString("[]"));
+                return new List<FoodItem>(); 
+            }
+            var data = blobClient.DownloadContent().Value.Content;
+            return data != null ? JsonSerializer.Deserialize<List<FoodItem>>(data) : new List<FoodItem>();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "There was a problem getting the current items.");
+            throw;
+        }
     }
 
     private BlobClient GetBlobClient(string containerName, string fileName)
