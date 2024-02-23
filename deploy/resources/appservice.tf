@@ -57,3 +57,11 @@ resource "azurerm_application_insights" "appinsights" {
   application_type    = "web"
   retention_in_days   = 30
 }
+
+## Permission for the api to access the storage
+
+resource "azurerm_role_assignment" "example" {
+  scope                = azurerm_storage_account.storage.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_windows_web_app.api.identity[0].principal_id
+}
