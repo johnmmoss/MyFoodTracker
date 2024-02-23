@@ -49,7 +49,7 @@ stages:
           displayName: Build Web
           inputs:
             targetType: 'inline'
-            workingDirectory: '$(Pipeline.Workspace)'
+            workingDirectory: '$(Build.SourcesDirectory)'
             script: |
               write-host "Current directory:"
               pwd
