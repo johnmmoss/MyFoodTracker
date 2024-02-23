@@ -19,6 +19,9 @@ resource "azurerm_windows_web_app" "api" {
 
   site_config {
     always_on = false
+    cors {
+      allowed_origins = [trimsuffix(azurerm_storage_account.storage.primary_web_endpoint, "/")]
+    }
   }
 
     app_settings = {
@@ -46,7 +49,6 @@ resource "azurerm_storage_container" "container" {
   name                 = "main"
   storage_account_name = azurerm_storage_account.storage.name
 }
-
 
 ## Application insights
 
