@@ -6,7 +6,7 @@ export const getFoodList = async () : Promise<Food[]| null> => {
       console.log(getApiUrl("food"));
       if(!response.ok)
       {
-            throw new Error("An error occurred getting site configuration");
+            throw new Error("An error occurred getting food data");
       }
       var food = await response.json() as Food[];
       console.log(food);

@@ -7,7 +7,7 @@ namespace MyFoodTracker.Data.AzureBlobStorage;
 
 public static class TypeRegistrations
 {
-    private const string StorageAccountName = "myfoodtrackerstorage";
+    private const string StorageAccountName = "mftwebdevuks";
     
     public static void AddAzureBlobFoodRepository(this IServiceCollection servicesCollection)
     {

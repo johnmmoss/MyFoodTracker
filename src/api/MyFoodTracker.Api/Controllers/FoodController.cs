@@ -7,11 +7,13 @@ namespace MyFoodTracker.Api.Controllers;
 [Route("api/[controller]")]
 public class FoodController : Controller
 {
+    private readonly ILogger<FoodController> _logger;
     private readonly IFoodRepository _foodRepository;
     private readonly IValidator<FoodItemRequest> _validator;
 
-    public FoodController(IFoodRepository foodRepository, IValidator<FoodItemRequest> validator)
+    public FoodController(ILogger<FoodController> logger, IFoodRepository foodRepository, IValidator<FoodItemRequest> validator)
     {
+        _logger = logger;
         _foodRepository = foodRepository;
         _validator = validator;
     }
@@ -19,6 +21,7 @@ public class FoodController : Controller
     [HttpGet]
     public IActionResult Food()
     {
+        _logger.LogInformation($"Getting food");
         var foodItems = _foodRepository.GetAll();
         return Ok(foodItems);
     }
@@ -26,6 +29,8 @@ public class FoodController : Controller
     [HttpPost]
     public IActionResult Food([FromBody]FoodItemRequest request)
     {
+        _logger.LogInformation($"Adding food {request.Name}");
+        
         var valid =_validator.Validate(request);
         if (!valid.IsValid)
         {
