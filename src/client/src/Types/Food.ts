@@ -12,3 +12,10 @@ export type NutritionalInfo = {
       calories:number
 }
 
+export type NewFood = {
+   name:string,
+   protein:number,
+   fat:number,
+   carbs:number,
+   calories:number
+}

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MyFoodTracker.Api.Models;
@@ -29,14 +30,12 @@ public class FoodController : Controller
     [HttpPost]
     public IActionResult Food([FromBody]FoodItemRequest request)
     {
-        _logger.LogInformation($"Adding food {request.Name}");
-        
         var valid =_validator.Validate(request);
         if (!valid.IsValid)
         {
             return BadRequest(valid.Errors.Select(x => new
             {
-                Property = x.PropertyName, Error = x.ErrorMessage, 
+                Property = x.PropertyName, Message = x.ErrorMessage, 
             }));
         }
         var newFoodItem = new FoodItem
@@ -44,14 +43,13 @@ public class FoodController : Controller
             Name = request.Name,
             NutritionalInfo =
             {
-                Carbohydrate = decimal.Parse(request.Carbohydrate),
-                Fibre = decimal.Parse(request.Fibre),
-                Fat = decimal.Parse(request.Fat),
-                Protein = decimal.Parse(request.Protein),
-                Calories = int.Parse(request.Calories)
+                Protein = request.Protein,
+                Carbohydrate = request.Carbs,
+                Fat = request.Fat,
+                Calories = request.Calories
             }
         };
-
+        
         _foodRepository.Add(newFoodItem);
 
         return Ok();
