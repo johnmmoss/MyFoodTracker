@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AppPage } from "../Components/AppPage";
-import { getFoodList, saveFood } from "../Services/FoodService";
+import { deleteFood, getFoodList, saveFood } from "../Services/FoodService";
 import { Food, NewFood } from "../Types/Food";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,7 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, CircularProgress, Modal } from "@mui/material";
+import { When } from "../Components/When";
 
 const modalStyle = {
    position: 'absolute' as 'absolute',
@@ -26,7 +27,7 @@ const modalStyle = {
 
 export const FoodList = () => {
 
-   const [foodList, setFoodList] = React.useState<Food[]>([]);
+   const [foodList, setFoodList] = React.useState<Food[] | null>(null);
 
    type FormValidationErrors = {
       name: boolean,
@@ -44,10 +45,10 @@ export const FoodList = () => {
       calories: false
    });
 
-   const [open, setOpen] = React.useState(false);
-   const openAddForm = () => setOpen(true);
+   const [addFormOpen, setAddFormOpen] = React.useState(false);
+   const openAddForm = () => setAddFormOpen(true);
    const closeAddForm = () => {
-      setOpen(false);
+      setAddFormOpen(false);
       setValidationError({
          name: false,
          protein: false,
@@ -57,14 +58,37 @@ export const FoodList = () => {
       })
    };
 
+   const [currentDeleteId, setCurrentDeleteId] = React.useState("");
+   const [deleteFormOpen, setDeleteFormOpen] = React.useState(false);
+   const openDeleteForm = () => setDeleteFormOpen(true);
+   const closeDeleteForm = () => {
+      setCurrentDeleteId("");
+      setDeleteFormOpen(false);
+   }
+
+   const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      let deleteId = event.currentTarget.getAttribute("data-id");
+      setCurrentDeleteId(deleteId!);
+      openDeleteForm();
+      console.log("deleteId:" + currentDeleteId);
+   }
+
+   const handleDeleteFoodItem = () => {
+      deleteFood(currentDeleteId).then(() => {
+         loadFood();
+         closeDeleteForm()
+      })
+   }
+
    useEffect(() => {
+      console.log(foodList);
       loadFood();
    }, []);
 
    const loadFood = () => {
       getFoodList()
          .then((foods) => {
-            if (foods?.length) {
+            if (foods) {
                setFoodList(foods);
             }
          }).catch(error => console.log(error));
@@ -159,10 +183,16 @@ export const FoodList = () => {
 
    return (
       <AppPage pageTitle="My Food Tracker">
-         {foodList == null ? (
-            <div>loading...</div>
-         ) : (
-
+         <When condition={foodList == null}>
+            <div className="loader">
+               <span><p>loading...</p></span>
+               <div><CircularProgress /></div>
+            </div>
+         </When>
+         <When condition={foodList != null && foodList.length === 0}>
+            <p>There are currently no food items</p>
+         </When>
+         <When condition={foodList != null && foodList.length > 0}>
             <TableContainer component={Paper}>
                <Table
                   sx={{ minWidth: 650 }}
@@ -172,43 +202,49 @@ export const FoodList = () => {
                   <TableHead>
                      <TableRow>
                         <TableCell>Food</TableCell>
-                        <TableCell align="right">Protein</TableCell>
+                        <TableCell component="th" align="right">Protein</TableCell>
                         <TableCell align="right">Fat</TableCell>
                         <TableCell align="right">Carbs</TableCell>
                         <TableCell align="right">Calories</TableCell>
+                        <TableCell></TableCell>
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {foodList.map((row) => (
-                        <TableRow
-                           key={row.name}
-                           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                        >
-                           <TableCell component="th" scope="row">
-                              {row.name}
-                           </TableCell>
-                           <TableCell align="right">
-                              {row.nutritionalInfo.protein}
-                           </TableCell>
-                           <TableCell align="right">
-                              {row.nutritionalInfo.fat}
-                           </TableCell>
-                           <TableCell align="right">
-                              {row.nutritionalInfo.carbohydrate}
-                           </TableCell>
-                           <TableCell align="right">
-                              {row.nutritionalInfo.calories}
-                           </TableCell>
-                        </TableRow>
-                     ))}
+                     {
+                        foodList?.map((row) => (
+                           <TableRow
+                              key={row.name}
+                              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                           >
+                              <TableCell scope="row">
+                                 {row.name}
+                              </TableCell>
+                              <TableCell align="right">
+                                 {row.nutritionalInfo.protein}
+                              </TableCell>
+                              <TableCell align="right">
+                                 {row.nutritionalInfo.fat}
+                              </TableCell>
+                              <TableCell align="right">
+                                 {row.nutritionalInfo.carbohydrate}
+                              </TableCell>
+                              <TableCell align="right">
+                                 {row.nutritionalInfo.calories}
+                              </TableCell>
+                              <TableCell align="right">
+                                 <Button size="small" data-id={row.id} onClick={(e) => handleDeleteClick(e)}>Delete</Button>
+                              </TableCell>
+                           </TableRow>
+                        ))
+                     }
                   </TableBody>
                </Table>
             </TableContainer>
-         )}
+         </When>
+         <Button onClick={openAddForm} variant="contained" sx={{ mt: 3 }}>Add Food</Button>
 
-         <Button onClick={openAddForm} variant="contained" sx={{ mt: 10 }}>Add Food</Button>
          <Modal
-            open={open}
+            open={addFormOpen}
             onClose={closeAddForm}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -286,6 +322,23 @@ export const FoodList = () => {
                      <Button type="submit" variant="contained">Add</Button>
                   </div>
                </form>
+            </Box>
+         </Modal>
+
+         <Modal
+            open={deleteFormOpen}
+            onClose={closeDeleteForm}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            <Box sx={modalStyle}>
+
+               <p>Are you sure you want to delete this food ?</p>
+
+               <div className="" style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                  <Button variant="outlined" onClick={closeDeleteForm}>Cancel</Button>
+                  <Button variant="contained" onClick={handleDeleteFoodItem}>Delete</Button>
+               </div>
             </Box>
          </Modal>
       </AppPage>

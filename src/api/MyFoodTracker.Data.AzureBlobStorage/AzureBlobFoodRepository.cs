@@ -30,9 +30,7 @@ public class AzureBlobFoodRepository : IFoodRepository
         _logger.LogInformation($"Adding new food item {item.Name}");
         var currentItems = GetCurrentItems();
         currentItems.Add(item);
-        var newContent = JsonSerializer.Serialize(currentItems);
-        var blobClient = GetBlobClient(ContainerName, FileName);
-        await blobClient.UploadAsync(BinaryData.FromString(newContent), overwrite: true);
+        await SaveItems(currentItems);
     }
 
     public FoodItem Get(string name)
@@ -42,6 +40,21 @@ public class AzureBlobFoodRepository : IFoodRepository
         return result;
     }
 
+    public async Task Delete(string id)
+    {
+        var currentItems = GetCurrentItems();
+        var toDelete = currentItems.Where(x => x.Id.ToLower() == id.ToLower());
+        var deletedItems = currentItems.Except(toDelete);
+        await SaveItems(deletedItems.ToList());
+    }
+    
+    private async Task SaveItems(List<FoodItem> foods)
+    {
+        var newContent = JsonSerializer.Serialize(foods);
+        var blobClient = GetBlobClient(ContainerName, FileName);
+        await blobClient.UploadAsync(BinaryData.FromString(newContent), overwrite: true);
+    }
+    
     private List<FoodItem> GetCurrentItems()
     {
         try

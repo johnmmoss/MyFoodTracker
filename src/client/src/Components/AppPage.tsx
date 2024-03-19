@@ -6,8 +6,8 @@ type AppPageProps = {
 export const AppPage = ({ pageTitle, children }: AppPageProps) => {
   return (
     <>
-      <div>
-        <h1>{pageTitle}</h1>
+      <div> 
+        <h1 className="pageTitle">{pageTitle}</h1>
         <div>{children}</div>
       </div>
     </>

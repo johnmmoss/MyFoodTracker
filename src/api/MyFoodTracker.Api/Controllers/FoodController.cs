@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MyFoodTracker.Api.Models;
@@ -40,6 +39,7 @@ public class FoodController : Controller
         }
         var newFoodItem = new FoodItem
         {
+            Id = Guid.NewGuid().ToString(),
             Name = request.Name,
             NutritionalInfo =
             {
@@ -52,6 +52,14 @@ public class FoodController : Controller
         
         _foodRepository.Add(newFoodItem);
 
+        return Ok();
+    }
+
+    [HttpDelete]
+    public IActionResult Food(string id)
+    {
+        _foodRepository.Delete(id);
+        
         return Ok();
     }
 }

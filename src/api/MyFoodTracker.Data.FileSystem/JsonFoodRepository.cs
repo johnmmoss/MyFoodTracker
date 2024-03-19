@@ -29,8 +29,15 @@ public class JsonFoodRepository : IFoodRepository
         _logger.LogInformation($"Adding new food item {item.Name}");
         var currentItems = GetCurrentItems();
         currentItems.Add(item);
-        var newContent = JsonSerializer.Serialize(currentItems);
-        await _fileSystem.WriteAsync(_settings.DataFilePath, newContent);
+        await SaveItems(currentItems);
+    }
+
+    public async Task Delete(string id)
+    {
+        var currentItems = GetCurrentItems();
+        var toDelete = currentItems.Where(x => x.Id.ToLower() == id.ToLower());
+        var updatedItems = currentItems.Except(toDelete).ToList();
+        await SaveItems(updatedItems);
     }
 
     public FoodItem Get(string name)
@@ -38,6 +45,12 @@ public class JsonFoodRepository : IFoodRepository
         return GetCurrentItems().First(x => x.Name.ToLower() == name.ToLower());
     }
 
+    public async Task SaveItems(List<FoodItem> foods)
+    {
+        var newContent = JsonSerializer.Serialize(foods);
+        await _fileSystem.WriteAsync(_settings.DataFilePath, newContent);
+    }
+    
     private List<FoodItem> GetCurrentItems()
     {
         var fileContents = _fileSystem.Read(_settings.DataFilePath);
