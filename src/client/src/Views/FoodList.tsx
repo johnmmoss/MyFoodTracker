@@ -182,7 +182,7 @@ export const FoodList = () => {
    }
 
    return (
-      <AppPage pageTitle="My Food Tracker">
+      <AppPage pageTitle="Foods">
          <When condition={foodList == null}>
             <div className="loader">
                <span><p>loading...</p></span>
@@ -241,8 +241,9 @@ export const FoodList = () => {
                </Table>
             </TableContainer>
          </When>
-         <Button onClick={openAddForm} variant="contained" sx={{ mt: 3 }}>Add Food</Button>
-
+         <div>
+            <Button onClick={openAddForm} variant="contained" sx={{ mt: 3 }}>Add Food</Button>
+         </div>
          <Modal
             open={addFormOpen}
             onClose={closeAddForm}

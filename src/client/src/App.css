@@ -44,6 +44,8 @@
    padding:15px;
 }
 
-.pageTitle {
-   margin-bottom: 5%;
+.page-wrapper {
+   display:flex;
+   justify-content: center;
+   flex-direction: column;
 }
